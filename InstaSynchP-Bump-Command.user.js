@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Command to bump a video from a user or url
 
-// @version     1
+// @version     1.0.1
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Bump-Command
 // @license     MIT
@@ -39,8 +39,6 @@ Bump.prototype.executeOnce = function () {
     var th = this;
     //bind event for bumping an url
     events.on(th, 'AddVideo', function (vidinfo) {
-        console.log(vidinfo);
-        console.log(videoInfoEquals(vidinfo.info, th.bumpInfo));
         //bump the video after it got added
         if (videoInfoEquals(vidinfo.info, th.bumpInfo)) {
             window.global.sendcmd('move', {
@@ -100,4 +98,4 @@ Bump.prototype.execute = function (opts) {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.bump = new Bump('1');
+window.plugins.bump = new Bump('1.0.1');
