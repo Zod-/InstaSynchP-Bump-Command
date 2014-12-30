@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Command to bump a video from a user or url
 
-// @version     1.0.1
+// @version     1.0.2
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Bump-Command
 // @license     MIT
@@ -84,7 +84,7 @@ Bump.prototype.execute = function (opts) {
         } else {
             //add the video and bump it in the addVideo event
             window.global.sendcmd('add', {
-                URL: urlParser.create(th.bumpInfo)
+                URL: urlParser.create({videoInfo: th.bumpInfo})
             });
         }
     } else {
@@ -98,4 +98,4 @@ Bump.prototype.execute = function (opts) {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.bump = new Bump('1.0.1');
+window.plugins.bump = new Bump('1.0.2');
