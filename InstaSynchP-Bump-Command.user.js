@@ -3,15 +3,13 @@
 // @namespace   InstaSynchP
 // @description Command to bump a video from a user or url
 
-// @version     1.0.2
+// @version     1.0.3
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Bump-Command
 // @license     MIT
 
-// @include     http://*.instasynch.com/*
-// @include     http://instasynch.com/*
-// @include     http://*.instasync.com/*
-// @include     http://instasync.com/*
+// @include     *://instasynch.com/r/*
+// @include     *://instasync.com/r/*
 // @grant       none
 // @run-at      document-start
 
@@ -41,7 +39,7 @@ Bump.prototype.executeOnce = function () {
   events.on(th, 'AddVideo', function (vidinfo) {
     //bump the video after it got added
     if (videoInfoEquals(vidinfo.info, th.bumpInfo)) {
-      window.global.sendcmd('move', {
+      sendcmd('move', {
         info: vidinfo.info,
         position: th.bumpTo
       });
@@ -58,7 +56,8 @@ Bump.prototype.execute = function (opts) {
     user = opts.usernames[0],
     i,
     activeIndex = activeVideoIndex(),
-    bumpIndex = -1;
+    bumpIndex = -1,
+    playlist = window.room.playlist.videos;
   th.bumpTo = opts.numbers.length > 0 ? opts.numbers[0] : activeVideoIndex() + 1;
   th.bumpInfo = opts.videos[0];
 
@@ -69,9 +68,9 @@ Bump.prototype.execute = function (opts) {
   }
 
   //search the video to be bumped
-  for (i = window.playlist.length - 1; i >= 0; i -= 1) {
-    if (videoInfoEquals(window.playlist[i].info, th.bumpInfo) ||
-      (user && window.playlist[i].addedby.toLowerCase() === user.toLowerCase())) {
+  for (i = playlist.length - 1; i >= 0; i -= 1) {
+    if (videoInfoEquals(playlist[i].info, th.bumpInfo) ||
+      (user && playlist[i].addedby.toLowerCase() === user.toLowerCase())) {
       bumpIndex = i;
       break;
     }
@@ -83,15 +82,15 @@ Bump.prototype.execute = function (opts) {
       addSystemMessage("The user didn't add any videos");
     } else {
       //add the video and bump it in the addVideo event
-      window.global.sendcmd('add', {
+      sendcmd('add', {
         URL: urlParser.create({
           videoInfo: th.bumpInfo
         })
       });
     }
   } else {
-    window.global.sendcmd('move', {
-      info: window.playlist[bumpIndex].info,
+    sendcmd('move', {
+      info: playlist[bumpIndex].info,
       position: th.bumpTo
     });
     th.bumpTo = undefined;
@@ -100,4 +99,4 @@ Bump.prototype.execute = function (opts) {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.bump = new Bump('1.0.2');
+window.plugins.bump = new Bump('1.0.3');
