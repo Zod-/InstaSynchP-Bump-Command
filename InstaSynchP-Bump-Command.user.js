@@ -8,8 +8,8 @@
 // @source      https://github.com/Zod-/InstaSynchP-Bump-Command
 // @license     MIT
 
-// @include     *://instasynch.com/r/*
 // @include     *://instasync.com/r/*
+// @include     *://*.instasync.com/r/*
 // @grant       none
 // @run-at      document-start
 
